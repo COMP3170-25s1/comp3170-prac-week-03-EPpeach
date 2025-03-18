@@ -19,8 +19,8 @@ public class Week3 implements IWindowListener {
 	
 	final private File DIRECTORY = new File("src/comp3170/week3"); 
 	
-	private int width = 800;
-	private int height = 800;
+	private int width = 650;
+	private int height = 650;
 	private Scene scene;
 	
 	public Week3() throws OpenGLException  {
