@@ -87,9 +87,13 @@ public class Scene {
 		System.out.println(modelMatrix);  //IT PRINTS!! Well made library, very nice
 		
 		// ---- b) Rotate         ----
-		modelMatrix = rotationMatrix((float) (-90*(Math.PI/180)), modelMatrix); //IT'S RADIANS DON'T FORGET
-		System.out.println(modelMatrix); 
+		//modelMatrix = rotationMatrix((float) (-90*(Math.PI/180)), modelMatrix); //IT'S RADIANS DON'T FORGET
+		//System.out.println(modelMatrix); 
 		
+		// ---- c) Move and scale ----
+		//TRS order?
+		modelMatrix = translationMatrix(0.5f, -0.5f, modelMatrix);
+		modelMatrix = scaleMatrix(0.5f, 0.5f, modelMatrix);
 		
 	}
 
