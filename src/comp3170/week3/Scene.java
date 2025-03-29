@@ -107,7 +107,7 @@ public class Scene {
 
 	public static Matrix4f translationMatrix(float tx, float ty, Matrix4f dest) {
 		// clear the matrix to the identity matrix
-		dest.identity();
+		dest.identity();   // Wouldn't the identity matrix have a 1 in k as well?
 
 		//     [ 1 0 0 tx ]
 		// T = [ 0 1 0 ty ]
@@ -132,9 +132,19 @@ public class Scene {
 	 * @return
 	 */
 
-	public static Matrix4f rotationMatrix(float angle, Matrix4f dest) {
-
-		// TODO: Your code here
+	public static Matrix4f rotationMatrix(float angle, Matrix4f dest) {		
+		//    [cos(angle) -sin(angle) 0 0]
+		// T =[sin(angle)  cos(angle) 0 0]
+		//    [    0           0      0 0]  
+		//    [    0           0      0 1]
+		//         i           j      k T
+		
+		//Live lecture doesn't have dest.idenity() in translation either... hmm
+		
+		dest.m00((float) Math.cos( angle));  //From the Live lecture, also going in vertical order like JOML does
+		dest.m01((float) Math.sin( angle));
+		dest.m10((float) Math.sin(-angle));  //Equivalent to -sin(angle)
+		dest.m11((float) Math.cos( angle));
 
 		return dest;
 	}
