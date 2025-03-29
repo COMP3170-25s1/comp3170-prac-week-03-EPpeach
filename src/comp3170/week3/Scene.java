@@ -28,6 +28,8 @@ public class Scene {
 	private int indexBuffer;
 	private Vector3f[] colours;
 	private int colourBuffer;
+	
+	private Matrix4f modelMatrix = new Matrix4f();  //Add a model matrix
 
 	private Shader shader;
 
@@ -77,7 +79,18 @@ public class Scene {
 			// @formatter:on
 
 		indexBuffer = GLBuffers.createIndexBuffer(indices);
-
+		
+		//========== Week3 Add a Model Matrix =============
+		// Just doing this so matrix matches diagrams :P
+		modelMatrix = modelMatrix.identity();
+		modelMatrix.m22(0);
+		System.out.println(modelMatrix);  //IT PRINTS!! Well made library, very nice
+		
+		// ---- b) Rotate         ----
+		modelMatrix = rotationMatrix((float) (-90*(Math.PI/180)), modelMatrix); //IT'S RADIANS DON'T FORGET
+		System.out.println(modelMatrix); 
+		
+		
 	}
 
 	public void draw() {
@@ -85,6 +98,7 @@ public class Scene {
 		shader.enable();
 		// set the attributes
 		shader.setAttribute("a_position", vertexBuffer);
+		shader.setUniform("u_modelMatrix", modelMatrix);  //Add a Model Matrix
 		shader.setAttribute("a_colour", colourBuffer);
 
 		// draw using index buffer
@@ -92,6 +106,7 @@ public class Scene {
 		
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glDrawElements(GL_TRIANGLES, indices.length, GL_UNSIGNED_INT, 0);
+		
 
 	}
 
@@ -107,7 +122,7 @@ public class Scene {
 
 	public static Matrix4f translationMatrix(float tx, float ty, Matrix4f dest) {
 		// clear the matrix to the identity matrix
-		dest.identity();   // Wouldn't the identity matrix have a 1 in k as well?
+		//dest.identity();   // Wouldn't the identity matrix have a 1 in k as well?
 
 		//     [ 1 0 0 tx ]
 		// T = [ 0 1 0 ty ]
@@ -141,10 +156,10 @@ public class Scene {
 		
 		//Live lecture doesn't have dest.idenity() in translation either... hmm
 		
-		dest.m00((float) Math.cos( angle));  //From the Live lecture, also going in vertical order like JOML does
-		dest.m01((float) Math.sin( angle));
+		dest.m00((float) Math.cos(angle));  //From the Live lecture, also going in vertical order like JOML does
+		dest.m01((float) Math.sin(angle));
 		dest.m10((float) Math.sin(-angle));  //Equivalent to -sin(angle)
-		dest.m11((float) Math.cos( angle));
+		dest.m11((float) Math.cos(angle));
 
 		return dest;
 	}
