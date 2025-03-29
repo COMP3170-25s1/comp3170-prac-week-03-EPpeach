@@ -133,10 +133,10 @@ public class Scene {
 	 */
 
 	public static Matrix4f rotationMatrix(float angle, Matrix4f dest) {		
-		//    [cos(angle) -sin(angle) 0 0]
-		// T =[sin(angle)  cos(angle) 0 0]
-		//    [    0           0      0 0]  
-		//    [    0           0      0 1]
+		//    [cos(angle) -sin(angle) 0 0] x
+		// T =[sin(angle)  cos(angle) 0 0] y
+		//    [    0           0      0 0] z
+		//    [    0           0      0 1] 
 		//         i           j      k T
 		
 		//Live lecture doesn't have dest.idenity() in translation either... hmm
@@ -160,9 +160,15 @@ public class Scene {
 	 */
 
 	public static Matrix4f scaleMatrix(float sx, float sy, Matrix4f dest) {
-
-		// TODO: Your code here
-
+		//    [sx 0  0 0] x
+		// T =[0  sy 0 0] y
+		//    [0  0  0 0] z
+		//    [0  0  0 1] 
+        //     i  j  k T]
+		
+		dest.m00(sx);
+		dest.m11(sy); //So this is different to live lecture version bc the calculation is already done
+		
 		return dest;
 	}
 
